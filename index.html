@@ -1,6 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
   body {
     margin: 0;
@@ -8,76 +10,82 @@
     background-color: #001a33; 
     font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     overflow-x: hidden;
+    min-height: 100vh;
   }
 
   .canvas-container {
     position: relative;
     width: 100%;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 60px 0 120px 0;
+    padding: 40px 20px 100px 20px; /* Padding ajustado */
     color: white;
     text-align: center;
     z-index: 5;
+    box-sizing: border-box;
   }
 
   .brand-header {
-    margin-bottom: 60px;
+    margin-bottom: 40px;
     z-index: 10;
+    width: 100%;
   }
 
   .brand-header h1 {
-    font-size: 32px;
-    letter-spacing: 8px;
+    font-size: clamp(24px, 8vw, 32px); /* Fonte flui entre 24px e 32px */
+    letter-spacing: clamp(4px, 2vw, 8px);
     margin: 0;
     text-transform: uppercase;
     font-weight: 800;
   }
 
-  /* --- ESTILO DO SLOGAN COM A LINHA --- */
   .brand-header p {
-    display: inline-block; /* Necessário para a linha medir o texto */
+    display: inline-block;
     position: relative;
     opacity: 0.9;
     font-size: 11px;
     letter-spacing: 3px;
     margin-top: 15px;
-    padding-bottom: 10px; /* Espaço entre texto e linha */
+    padding-bottom: 10px;
   }
 
   .brand-header p::after {
     content: "";
     position: absolute;
     bottom: 0;
-    left: -10%; /* Faz a linha começar antes da frase */
-    width: 120%; /* Faz a linha ser 20% maior que a frase total */
-    height: 1px; /* Espessura da linha */
-    background: rgba(255, 255, 255, 0.6); /* Branco suave */
-    box-shadow: 0 0 8px rgba(255, 255, 255, 0.3); /* Brilho leve */
+    left: -10%;
+    width: 120%;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.6);
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
   }
 
   .projects-grid {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 30px;
+    gap: 20px;
     max-width: 1100px;
-    padding: 20px;
+    width: 100%;
     z-index: 10;
   }
 
   .saas-card {
     background: rgba(255, 255, 255, 0.06);
     backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
     border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 24px;
     padding: 25px;
-    width: 280px;
+    width: 100%; /* Ocupa tudo em telas pequenas */
+    max-width: 300px; /* Limita o tamanho em telas grandes */
     transition: all 0.4s ease;
     text-decoration: none;
     color: white;
     box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+    box-sizing: border-box;
   }
 
   .saas-card:hover {
@@ -105,7 +113,7 @@
     font-size: 14px;
     opacity: 0.8;
     margin-bottom: 25px;
-    height: 40px;
+    min-height: 40px;
   }
 
   .btn-link {
@@ -118,34 +126,22 @@
     font-weight: bold;
   }
 
-  /* --- BLOCOS --- */
-  .block {
-    position: fixed;
-    top: -50px; /* Começa um pouco fora da tela no topo para o delay funcionar melhor */
-    border-radius: 4px;
-    pointer-events: none;
-    z-index: -1; /* Coloque em -1 para garantir que fiquem ATRÁS do fundo azul se necessário */
-    animation: floatUp 25s infinite linear; 
-    opacity: 0;
-  }
-  .block-blue { background: rgba(0, 150, 255, 0.4); }
-  .block-yellow { background: rgba(255, 215, 0, 0.4); }
-
-  @keyframes floatUp {
-    0% { transform: translateY(110vh) rotate(0deg); opacity: 0; }
-    10% { opacity: 0.9; }
-    90% { opacity: 0.9; }
-    100% { transform: translateY(-20vh) rotate(360deg); opacity: 0; }
-  }
-
   /* --- CONTATOS --- */
   .contact-footer {
-    position: absolute;
-    bottom: 40px;
-    right: 40px;
     display: flex;
     gap: 15px;
     z-index: 100;
+    margin-top: 50px; /* Margem superior para separar do grid no mobile */
+  }
+
+  /* Desktop: Fixa no canto. Mobile: Centraliza abaixo dos cards */
+  @media (min-width: 768px) {
+    .contact-footer {
+      position: fixed;
+      bottom: 40px;
+      right: 40px;
+      margin-top: 0;
+    }
   }
 
   .contact-icon {
@@ -170,26 +166,46 @@
     background: #ffd700;
     color: #001a33;
   }
+
+  /* --- ANIMAÇÃO DOS BLOCOS (Otimizada para não criar scroll horizontal) --- */
+  .block {
+    position: fixed;
+    top: -50px;
+    border-radius: 4px;
+    pointer-events: none;
+    z-index: -1;
+    animation: floatUp 25s infinite linear; 
+    opacity: 0;
+  }
+  .block-blue { background: rgba(0, 150, 255, 0.4); }
+  .block-yellow { background: rgba(255, 215, 0, 0.4); }
+
+  @keyframes floatUp {
+    0% { transform: translateY(110vh) rotate(0deg); opacity: 0; }
+    10% { opacity: 0.9; }
+    90% { opacity: 0.9; }
+    100% { transform: translateY(-20vh) rotate(360deg); opacity: 0; }
+  }
 </style>
 </head>
 <body>
 
 <div class="canvas-container">
   
-  <div class="brand-header">
+  <header class="brand-header">
     <h1>LUMIA STUDIO</h1>
     <p>TURNING IDEAS INTO SOLUTIONS</p>
-  </div>
+  </header>
   
-  <div class="projects-grid">
+  <main class="projects-grid">
     <a href="https://escala-pro.vercel.app" target="_blank" class="saas-card">
-      <img src="https://drive.google.com/thumbnail?id=1B7uujyJOcSnetfChuMp8tr7StkcX9pX8&sz=w400" class="saas-image">
+      <img src="https://drive.google.com/thumbnail?id=1B7uujyJOcSnetfChuMp8tr7StkcX9pX8&sz=w400" class="saas-image" alt="EscalaPro">
       <h3>EscalaPro</h3>
       <p>Solução inteligente para gestão de escalas e serviços.</p>
       <span class="btn-link">Acessar Projeto</span>
     </a>
 
-    <div class="saas-card" style="opacity: 0.5; cursor: default;">
+    <div class="saas-card" style="opacity: 0.6; cursor: default;">
       <div style="width:100%; height:180px; background:rgba(255,255,255,0.02); border-radius:16px; display:flex; align-items:center; justify-content:center; margin-bottom:15px; border: 2px dashed rgba(255,215,0,0.1);">
          <span style="font-size:40px; color:#ffd700; opacity:0.1;">+</span>
       </div>
@@ -197,37 +213,35 @@
       <p>Novo Micro SaaS em desenvolvimento.</p>
       <span class="btn-link">Aguarde</span>
     </div>
-  </div>
+  </main>
 
-  <div class="contact-footer">
+  <footer class="contact-footer">
     <a href="mailto:lumiastudioapp@gmail.com" class="contact-icon" title="E-mail">
       <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
     </a>
     <a href="https://www.instagram.com/lumia.apps/" target="_blank" class="contact-icon" title="Instagram">
       <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
     </a>
-  </div>
+  </footer>
 
 </div>
 
 <script>
   function createBlocks() {
     const container = document.body;
-    const count = 25; // Aumentei um pouco a quantidade
+    const count = 15; // Reduzi um pouco para performance em mobile
     for (let i = 0; i < count; i++) {
       const block = document.createElement('div');
       const isYellow = Math.random() > 0.5;
       block.className = isYellow ? 'block block-yellow' : 'block block-blue';
       
-      const size = Math.random() * 20 + 10; 
+      const size = Math.random() * 15 + 10; 
       block.style.width = size + 'px';
       block.style.height = (size * 0.8) + 'px';
       
-      // Usa porcentagem para evitar que saiam da tela lateralmente
       block.style.left = Math.random() * 95 + '%'; 
-      
-      block.style.animationDuration = (Math.random() * 15 + 15) + 's'; 
-      block.style.animationDelay = (Math.random() * -30) + 's'; 
+      block.style.animationDuration = (Math.random() * 10 + 15) + 's'; 
+      block.style.animationDelay = (Math.random() * -20) + 's'; 
       container.appendChild(block);
     }
   }
