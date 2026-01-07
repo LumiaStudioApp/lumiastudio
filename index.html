@@ -121,10 +121,11 @@
   /* --- BLOCOS --- */
   .block {
     position: fixed;
+    top: -50px; /* Começa um pouco fora da tela no topo para o delay funcionar melhor */
     border-radius: 4px;
     pointer-events: none;
-    z-index: 1;
-    animation: floatUp 30s infinite linear; 
+    z-index: -1; /* Coloque em -1 para garantir que fiquem ATRÁS do fundo azul se necessário */
+    animation: floatUp 25s infinite linear; 
     opacity: 0;
   }
   .block-blue { background: rgba(0, 150, 255, 0.4); }
@@ -212,16 +213,20 @@
 <script>
   function createBlocks() {
     const container = document.body;
-    const count = 18; 
+    const count = 25; // Aumentei um pouco a quantidade
     for (let i = 0; i < count; i++) {
       const block = document.createElement('div');
       const isYellow = Math.random() > 0.5;
       block.className = isYellow ? 'block block-yellow' : 'block block-blue';
-      const size = Math.random() * 30 + 15; 
+      
+      const size = Math.random() * 20 + 10; 
       block.style.width = size + 'px';
       block.style.height = (size * 0.8) + 'px';
-      block.style.left = Math.random() * 100 + 'vw';
-      block.style.animationDuration = (Math.random() * 10 + 20) + 's'; 
+      
+      // Usa porcentagem para evitar que saiam da tela lateralmente
+      block.style.left = Math.random() * 95 + '%'; 
+      
+      block.style.animationDuration = (Math.random() * 15 + 15) + 's'; 
       block.style.animationDelay = (Math.random() * -30) + 's'; 
       container.appendChild(block);
     }
