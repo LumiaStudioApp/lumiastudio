@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    background-color: #001a33; 
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    overflow-x: hidden;
+  }
+
+  .canvas-container {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 60px 0 120px 0;
+    color: white;
+    text-align: center;
+    z-index: 5;
+  }
+
+  .brand-header {
+    margin-bottom: 60px;
+    z-index: 10;
+  }
+
+  .brand-header h1 {
+    font-size: 32px;
+    letter-spacing: 8px;
+    margin: 0;
+    text-transform: uppercase;
+    font-weight: 800;
+  }
+
+  /* --- ESTILO DO SLOGAN COM A LINHA --- */
+  .brand-header p {
+    display: inline-block; /* Necessário para a linha medir o texto */
+    position: relative;
+    opacity: 0.9;
+    font-size: 11px;
+    letter-spacing: 3px;
+    margin-top: 15px;
+    padding-bottom: 10px; /* Espaço entre texto e linha */
+  }
+
+  .brand-header p::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: -10%; /* Faz a linha começar antes da frase */
+    width: 120%; /* Faz a linha ser 20% maior que a frase total */
+    height: 1px; /* Espessura da linha */
+    background: rgba(255, 255, 255, 0.6); /* Branco suave */
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.3); /* Brilho leve */
+  }
+
+  .projects-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    max-width: 1100px;
+    padding: 20px;
+    z-index: 10;
+  }
+
+  .saas-card {
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 24px;
+    padding: 25px;
+    width: 280px;
+    transition: all 0.4s ease;
+    text-decoration: none;
+    color: white;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+  }
+
+  .saas-card:hover {
+    transform: translateY(-10px);
+    border: 1px solid rgba(255, 215, 0, 0.5);
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  .saas-image {
+    width: 100%;
+    height: 180px;
+    border-radius: 16px;
+    margin-bottom: 18px;
+    object-fit: cover;
+    border: 1px solid rgba(255, 215, 0, 0.3);
+  }
+
+  .saas-card h3 {
+    margin: 10px 0 8px 0;
+    font-size: 22px;
+    color: #ffd700; 
+  }
+
+  .saas-card p {
+    font-size: 14px;
+    opacity: 0.8;
+    margin-bottom: 25px;
+    height: 40px;
+  }
+
+  .btn-link {
+    display: inline-block;
+    font-size: 11px;
+    background: rgba(255,255,255,0.15);
+    padding: 10px 25px;
+    border-radius: 50px;
+    text-transform: uppercase;
+    font-weight: bold;
+  }
+
+  /* --- BLOCOS --- */
+  .block {
+    position: fixed;
+    border-radius: 4px;
+    pointer-events: none;
+    z-index: 1;
+    animation: floatUp 30s infinite linear; 
+    opacity: 0;
+  }
+  .block-blue { background: rgba(0, 150, 255, 0.4); }
+  .block-yellow { background: rgba(255, 215, 0, 0.4); }
+
+  @keyframes floatUp {
+    0% { transform: translateY(110vh) rotate(0deg); opacity: 0; }
+    10% { opacity: 0.9; }
+    90% { opacity: 0.9; }
+    100% { transform: translateY(-20vh) rotate(360deg); opacity: 0; }
+  }
+
+  /* --- CONTATOS --- */
+  .contact-footer {
+    position: absolute;
+    bottom: 40px;
+    right: 40px;
+    display: flex;
+    gap: 15px;
+    z-index: 100;
+  }
+
+  .contact-icon {
+    text-decoration: none;
+    color: white;
+    opacity: 0.7;
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.1);
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .contact-icon:hover {
+    opacity: 1;
+    transform: scale(1.1);
+    background: #ffd700;
+    color: #001a33;
+  }
+</style>
+</head>
+<body>
+
+<div class="canvas-container">
+  
+  <div class="brand-header">
+    <h1>LUMIA STUDIO</h1>
+    <p>TURNING IDEAS INTO SOLUTIONS</p>
+  </div>
+  
+  <div class="projects-grid">
+    <a href="https://escala-pro.vercel.app" target="_blank" class="saas-card">
+      <img src="https://drive.google.com/thumbnail?id=1B7uujyJOcSnetfChuMp8tr7StkcX9pX8&sz=w400" class="saas-image">
+      <h3>EscalaPro</h3>
+      <p>Solução inteligente para gestão de escalas e serviços.</p>
+      <span class="btn-link">Acessar Projeto</span>
+    </a>
+
+    <div class="saas-card" style="opacity: 0.5; cursor: default;">
+      <div style="width:100%; height:180px; background:rgba(255,255,255,0.02); border-radius:16px; display:flex; align-items:center; justify-content:center; margin-bottom:15px; border: 2px dashed rgba(255,215,0,0.1);">
+         <span style="font-size:40px; color:#ffd700; opacity:0.1;">+</span>
+      </div>
+      <h3>Em Breve</h3>
+      <p>Novo Micro SaaS em desenvolvimento.</p>
+      <span class="btn-link">Aguarde</span>
+    </div>
+  </div>
+
+  <div class="contact-footer">
+    <a href="mailto:lumiastudioapp@gmail.com" class="contact-icon" title="E-mail">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+    </a>
+    <a href="https://www.instagram.com/lumia.apps/" target="_blank" class="contact-icon" title="Instagram">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+    </a>
+  </div>
+
+</div>
+
+<script>
+  function createBlocks() {
+    const container = document.body;
+    const count = 18; 
+    for (let i = 0; i < count; i++) {
+      const block = document.createElement('div');
+      const isYellow = Math.random() > 0.5;
+      block.className = isYellow ? 'block block-yellow' : 'block block-blue';
+      const size = Math.random() * 30 + 15; 
+      block.style.width = size + 'px';
+      block.style.height = (size * 0.8) + 'px';
+      block.style.left = Math.random() * 100 + 'vw';
+      block.style.animationDuration = (Math.random() * 10 + 20) + 's'; 
+      block.style.animationDelay = (Math.random() * -30) + 's'; 
+      container.appendChild(block);
+    }
+  }
+  createBlocks();
+</script>
+
+</body>
+</html>
